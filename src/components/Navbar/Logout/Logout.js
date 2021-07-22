@@ -16,15 +16,17 @@ import "./logout.css"
 import logoutPic from "../../../assets/powerButton.png"
 
 
-const Logout = () => {
+const Logout = props => {
 
     return (
         <div>
-            <img src={logoutPic} alt="power-btn" id="logout" className="logout" />
+            <img src={logoutPic} 
+            alt="power-btn" 
+            id="logout" 
+            className="logout"
+            onClick={props.clearSession} />
         </div>
     )
 }
 
 export default Logout
-
-// ! BE BACK 10:21AM
