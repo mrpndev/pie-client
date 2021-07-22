@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import "./pies.css"
+import DisplayPies from "./Pie/Pie"
+import CreatePie from "./Pie/createPie/CreatePie";
 
+// shows all pies
 const Pies = props => {
     console.log(props)
     const [pies, setPies] = useState([])
+    // console.log(pies)
+    const [createPie, setCreatePie] = useState(false)
 
     const fetchPies = () => {
         let url = "http://localhost:4000/pies"
@@ -16,14 +21,22 @@ const Pies = props => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => setPies(json))
     }
 
     useEffect(() => {
         fetchPies()
-    }, [])
+    }, [createPie])
+
+    const buttonHandler = () => setCreatePie(true)
 
     return (
+        <>
+        {createPie ? 
+        <CreatePie setCreatePie={setCreatePie} sessionToken={props.sessionToken}/> : null}
+        {!createPie ?
+        <button onClick={buttonHandler}>Create Pie</button> : null}
+
         <table>
             <thead>
                 <tr>
@@ -36,9 +49,11 @@ const Pies = props => {
                 </tr>
             </thead>
             <tbody>
-
+                <DisplayPies pie={pies}/>
             </tbody>
         </table>
+        </>
+        
     )
 }
 
